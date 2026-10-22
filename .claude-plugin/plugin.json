@@ -1,0 +1,8 @@
+{
+  "name": "usine",
+  "version": "0.1.0",
+  "description": "Une chaîne fixe pour livrer une issue — spec, build, revues en parallèle, approbation — avec 7 agents. Elle finit toujours par une PR, jamais par un merge.",
+  "author": { "name": "Vivien Marcuz" },
+  "repository": "https://github.com/VivienMCZ/usine",
+  "keywords": ["workflow", "agents", "code-review", "security", "pull-request"]
+}

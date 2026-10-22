@@ -1,0 +1,16 @@
+{
+  "name": "usine",
+  "owner": {
+    "name": "Vivien Marcuz"
+  },
+  "plugins": [
+    {
+      "name": "usine",
+      "source": "./",
+      "description": "Chaîne spec → build → revues → approbation avec 7 agents ; toujours une PR, jamais un merge."
+    }
+  ],
+  "metadata": {
+    "description": "La chaîne /usine : spec, build, revues en parallèle et approbation avec 7 agents, toujours jusqu'à une PR, jamais un merge."
+  }
+}
