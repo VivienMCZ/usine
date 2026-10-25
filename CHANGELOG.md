@@ -1,5 +1,10 @@
 # Changelog
 
+## Non publié
+
+- CI `Validation du plugin` : `claude plugin validate`, JSON valides, version présente dans le
+  CHANGELOG, relecteurs toujours en lecture seule. Actions épinglées par SHA, droits en lecture seule.
+
 ## 0.1.0 — 22/10/2026
 
 Première version, extraite de la chaîne `/usine` du projet Shift et rendue générique.

@@ -1,0 +1,46 @@
+name: Validation du plugin
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  valider:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Actions épinglées par SHA : une étiquette de version peut être déplacée.
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: 22
+
+      - name: Valider le plugin et le marketplace
+        run: npx --yes @anthropic-ai/claude-code@2.1.310 plugin validate .
+
+      - name: Vérifier que les fichiers JSON sont valides
+        run: |
+          for f in .claude-plugin/plugin.json .claude-plugin/marketplace.json settings.example.json; do
+            jq empty "$f" || { echo "JSON invalide : $f"; exit 1; }
+          done
+
+      - name: Vérifier que la version figure dans le CHANGELOG
+        run: |
+          version=$(jq -r .version .claude-plugin/plugin.json)
+          grep -q "^## $version " CHANGELOG.md || {
+            echo "La version $version de plugin.json n'a pas d'entrée dans CHANGELOG.md"; exit 1;
+          }
+
+      - name: Vérifier que les relecteurs restent en lecture seule
+        run: |
+          for a in tech-lead code-reviewer; do
+            grep -qx 'tools: Read, Grep, Glob' "agents/$a.md" || {
+              echo "agents/$a.md doit garder « tools: Read, Grep, Glob »"; exit 1;
+            }
+          done
